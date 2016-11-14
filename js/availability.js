@@ -9,6 +9,8 @@
 // mojebi 6te stane konflikt - promqna ot proekta
 
 
+// сега правя промяна от гит-хуб и я къмитвам
+
 var allAccounts;
 
 function execAvailOnDevReady() {
