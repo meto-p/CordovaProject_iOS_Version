@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Supplier Access Client</title>
+    <link rel="stylesheet" href="css/third_party/jquery.mobile.external-png-1.4.5.min.css"/>
+    <link rel="stylesheet" href="css/master.css"/>
+<!--     <link rel="stylesheet" href="css/dashboard.css"/> -->
+	<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="cordova.js"> </script>
+    <script src="js/lib/jquery-2.1.3.js"> </script>
+    <script src="js/lib/jquery.mobile-1.4.5.js"> </script>
+    <script src="js/supAccessProps.js"> </script>
+    <script src="js/errorHandler.js"> </script>
+    <script src="js/globalization.js"> </script>
+    <script src="js/main.js"> </script>
+    <script src="js/dao.js"> </script>
+    <script src="js/offlineMsgRequests.js"> </script>
+    <script src="js/writeMessage.js"> </script>
+    <script src="js/commonUtil.js"></script>
+    <script src="js/loginPanel.js"> </script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script type='text/javascript'>document.addEventListener("deviceReady", execOnDevReadyGlobal, false);</script>
+    <script> document.addEventListener("deviceready", execWriteMsgOnDevReady, false); </script>
+
+  </head>
+
+  <body>
+    <div id="menuBar"></div>    
+    <div data-role="page" id="writeMessage" class="screen">    
+      <!-- add login overlay panel -->
+      <div  id="login-panel-placeholder"></div>
+<!--       <script> $( "#login-panel-placeholder" ).replaceWith( loginPanel ); </script> -->
+      <div class="errAlert" id="errorAlert"></div>
+      <div class="statusBar">         
+          <div class="homeLink glyphicon glyphicon-home languageHTML" onclick="location.href = 'dashboard.html'" data-text='home'></div>
+	      <span class="title" id="pageTitle"></span>
+	      <div class="statBarLoggedUser">
+		      <span class="glyphicon glyphicon-user"></span>
+		      <span class="loggedUser"></span>
+		  </div>
+	      <div class="clear"></div>
+      </div>
+      <div data-role="content" id="container">  
+        <div class="ui-grid-a center">
+          <div class="ui-block-a"  style="text-align: center">
+            <button id='backButton' class='languageHTML' data-inline="true" data-mini="true" data-corners="true" type='button'  data-icon="arrow-l" data-text='backBtn' ></button> 
+          </div>
+          <div class="ui-block-b"  style="text-align: center">
+            <button id='sendButton' class='languageHTML' data-inline="true" data-mini="true" data-corners="true" type='button'  data-icon="arrow-r" data-text='sendBtn' ></button>
+          </div>
+        </div>  
+        <div class="ui-grid-solo">
+          <div class="ui-block-a ui-corner-all" id="name" ><select data-mini="true" id="contractNo"></select></div>
+        </div>  
+        <div class="ui-grid-a">
+          <div class="ui-block-a languageHTML"  data-mini="true" data-text="subject" style="width:25%" >Subject:</div>
+          <div class="ui-block-b ui-corner-all positiveAvail" style="width:75%" id="subjectMail">
+            <input type='text' id='messageSubject'/>
+          </div>
+        </div>  
+        <div class="ui-grid-solo">
+          <div id="bodyMail" class="ui-block-a"><textarea id='messageBody' style='height: 500px'></textarea></div>
+        </div>  
+      </div>
+      
+      <div class="panel left" data-role="panel" data-position="left" data-display="overlay" id="menu-panel">
+        <div class='ui-block-a' id='closePanel'>
+          <a href='#' data-rel='close' class='ui-btn ui-btn-b ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-inline'></a>
+        </div>         
+        <p id="menuTitle" data-text="menu" class="languageHTML"></p>
+        <ul id="menuNavigation">
+<!--           <li id="login"><a href="#login-panel" class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-gear ui-btn languageHTML ui-menu-buttons" data-text="loginBtn"></a></li> -->
+		  <li id="statement"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-action ui-btn languageHTML ui-menu-buttons" data-text="statementBtn"></a></li>
+          <li id="message"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-mail ui-btn languageHTML ui-menu-buttons" data-text="messageBtn"></a></li>
+          <li id="refresh"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-refresh ui-btn languageHTML ui-menu-buttons" data-text="refreshBtn"></a></li>     
+          <li id="pending"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-pending ui-btn languageHTML ui-menu-buttons" data-text="offlineModeBtn"></a></li>
+          <li id="logout"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-power ui-btn languageHTML ui-menu-buttons" data-text="logoutBtn"></a></li>
+        </ul>
+      </div>
+      
+    </div>
+  </body>
+</html>

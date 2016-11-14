@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Supplier Access Client</title>
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/third_party/jquery.mobile.external-png-1.4.5.min.css">    
+    <link rel="stylesheet" href="css/master.css"/>    
+    <link rel="stylesheet" href="css/offlinePmntRequests.css"/>
+    <script src="cordova.js"> </script>
+    <script src="js/lib/jquery-2.1.3.js"> </script>
+    <script src="js/lib/jquery.mobile-1.4.5.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="js/supAccessProps.js"> </script>    
+    <script src="js/errorHandler.js"> </script>    
+    <script src="js/globalization.js"> </script>    
+    <script src="js/main.js"> </script>
+    <script src="js/offlinePmntRequests.js"> </script>   
+    <script src="js/availability.js"> </script>     
+    <script src="js/loginPanel.js"> </script>    
+    <script src="js/dao.js"> </script>
+    <script src="js/offlineMsgRequests.js"> </script>
+    <script src="js/commonUtil.js"></script>
+    <script type='text/javascript'>document.addEventListener("deviceReady", execOnDevReadyGlobal, false);</script>
+    <script type='text/javascript'> document.addEventListener("deviceReady", execOfflineReqOnDevReady, false);</script>    
+  </head>
+  <body>
+    <div id="menuBar"></div>  
+    <!--   <div id="offlineRequests"> </div>  -->
+    <div data-role="page" id="offlineRequests" class="screen">  
+      <!-- add login overlay panel -->
+      <div  id="login-panel-placeholder"></div>
+      <script type='text/javascript'>
+        $( "#login-panel-placeholder" ).replaceWith( loginPanel );
+      </script>   
+      <div class="errAlert" id="errorAlert"></div>   
+      <div class="statusBar">         
+          <div class="homeLink glyphicon glyphicon-home languageHTML" onclick="location.href = 'dashboard.html'" data-text='home'></div>
+	      <span class="title" id="pageTitle"></span>
+	      <div class="statBarLoggedUser">
+		      <span class="glyphicon glyphicon-user"></span>
+		      <span class="loggedUser"></span>
+		  </div>
+	      <div class="clear"></div>
+      </div>
+      <div id="prBar"></div>  
+      
+      <ul data-role="listview" data-theme="b" id="listview-pending" class="offlinePaymentListview"></ul>    
+      <div id = "formButtons" > </div>      
+      <div class="panel left" data-role="panel" data-position="left" data-display="overlay" id="menu-panel">
+        <div class='ui-block-a' id='closePanel'>
+          <a href='#' data-rel='close' class='ui-btn ui-btn-b ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-inline'></a>
+        </div>         
+        <p id="menuTitle" data-text="menu" class="languageHTML"></p>
+        <ul id="menuNavigation">
+<!--           <li id="login"><a href="#login-panel" class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-gear ui-btn languageHTML ui-menu-buttons" data-text="loginBtn"></a></li> -->
+		  <li id="statement"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-action ui-btn languageHTML ui-menu-buttons" data-text="statementBtn"></a></li>
+          <li id="message"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-mail ui-btn languageHTML ui-menu-buttons" data-text="messageBtn"></a></li>
+          <li id="refresh"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-refresh ui-btn languageHTML ui-menu-buttons" data-text="refreshBtn"></a></li>     
+          <li id="pending"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-pending ui-btn languageHTML ui-menu-buttons" data-text="offlineModeBtn"></a></li>
+          <li id="logout"><a class="ui-btn-icon-left ui-btn-b ui-corner-all ui-icon-power ui-btn languageHTML ui-menu-buttons" data-text="logoutBtn"></a></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

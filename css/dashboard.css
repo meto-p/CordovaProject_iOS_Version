@@ -1,0 +1,28 @@
+#dashPlaceholder {
+ margin: 25px;
+}
+
+#dashTitle {
+ margin-top: 5px;
+ margin-bottom: 0px;
+ font-size: x-large;
+}
+
+#welcomeMsg {
+ margin-top: 0px;
+ margin-bottom: 15px;
+ color: gray;
+}
+
+p {
+ margin-top: 5px;
+ margin-bottom: 5px;
+}
+
+p.inline {
+    display: inline;
+}
+
+.dashboardImage {
+	margin: 0px 7px 0px 0px;
+}

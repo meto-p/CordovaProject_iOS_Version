@@ -1,0 +1,429 @@
+#container{
+	margin-top: 5px;
+}
+
+.menu
+{
+	width:100%;
+	background-color:#333333;
+/* 	box-shadow: 2px 0px 2px black; */
+	role: banner;
+	overflow: auto;
+	position: fixed;
+	z-index: 900;
+}
+
+.screen
+{
+    /*padding-top == "max-width:" of a button from the menu bar*/
+    padding-top: 44px;
+    min-height: 100%!important;
+}
+
+#dashboardLogoContainer
+{
+	width: 50%;
+    height: 44px;
+    padding-top: 10px;
+    background-color: #333333;
+}
+
+#dashboardLogoImg
+{
+	width: 58px;
+    height: 23px;
+    margin: auto;
+    display: block;
+}
+
+
+/* Login screen  */
+
+.formLabel
+{
+	font-family: Verdana, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px !important;
+	color: black;
+	text-align: left
+}
+
+.inlineForm {
+	display: inline-block !important;
+}
+
+#submitLoginPage{
+	font-family: Verdana, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px !important;
+	color: white;
+	text-align: center;
+	font-weight: normal;
+	background-color: #83b959;
+	width: 100px;
+	
+}
+
+.imxLogo 
+{ 
+/* 	float:left; */
+/* 	padding:3px 3px 3px 3px; */
+/* 	background-color:#8A0808; */
+/*  width:7.5%; */
+/* 	width: 90px; */
+/* 	height: 35px; */
+/*	max-width:100px; */
+/* 	background-position: center center; */
+/* 	background-repeat: initial initial; */
+
+    display: block;
+    margin: auto;
+    padding: 6px;
+   
+}
+
+#logoContainer
+{
+	height: 46px !important;
+	margin: 20% 25px 0px 25px;
+/*     margin-top: 25%; */
+/*     margin-bottom: 0px; */
+	background: #e2e2e2;
+}
+
+.ui-mini {
+	margin: 5px 0 10px 0;
+}
+
+.login
+{
+	float:left;
+	padding:3px 3px 3px 38px;
+	background-color:#8A0808;
+	width:7.5%;
+	max-width: 48px;
+	background-position: initial initial;
+	background-repeat: initial initial;
+}
+
+/* id of screen */
+#login
+{
+	height: 100%;
+}
+
+#loginContainer {
+	background: white;
+	margin: 0px 25px 25px 25px; 
+	padding:15px;
+}
+
+.closePanel
+{
+	float:right;
+	padding:3px 3px 3px 38px;
+	background-color:#8A0808;
+	width:7.5%;
+	max-width: 48px;
+/* 	height:2.8em; */
+	background-position: initial initial;
+	background-repeat: initial initial;
+}
+
+.logout
+{
+	float:right;
+	padding:3px 3px 3px 38px;
+	background-color:#8A0808;
+	width:7.5%;
+	max-width: 48px;
+	background-position: initial initial;
+	background-repeat: initial initial;
+}
+
+.message
+{
+	float:right;
+	padding:3px 38px 3px 38px;
+	background-color:#8A0808;
+	width:7.5%;
+	max-width: 48px;
+	background-position: initial initial;
+	background-repeat: initial initial;	
+}
+
+.statement
+{
+	float:right;
+	padding:3px 38px 3px 38px;
+	background-color:#8A0808;
+	width:7.5%;
+	max-width: 48px;
+	background-position: initial initial;
+	background-repeat: initial initial;
+}
+
+.pending
+{
+	float:right;
+	padding:3px 38px 3px 38px;
+	background-color:#8A0808;
+	width:7.5%;
+	max-width: 48px;
+	background-position: initial initial;
+	background-repeat: initial initial;	
+}
+
+
+.title
+{
+/* 	float: left; */
+	text-align:center;
+/*	height:10px;   */
+	font-family:Arial;
+	font-size:12px;
+	background-color:transparent;
+	padding: 2px;
+	padding-bottom:5px;
+}
+
+.loggedUser
+{
+	float: right;
+	text-align:center;
+/*	height:10px;   */
+	font-family:Arial;
+	font-size:12px;
+	background-color:transparent;
+	padding-bottom:5px;
+}
+
+.statBarLoggedUser {
+	display: inline-block;
+	float: right;
+}
+
+.glyphicon-user:before {
+	float: right;
+	font-size: 12px;
+	padding-right: 5px;
+}
+
+.statusBar 
+{
+	background-color: #FFF;
+	padding: 4px 10px 0px 10px;
+}
+
+.statusBar:AFTER 
+{
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+#statusContainer
+{
+	padding-top: 12px;
+	color: #83b959;
+}
+
+.connOnline
+{
+	color: #83b959;
+	text-shadow: 0 0 0;
+}
+
+.connOffline
+{
+	color: red;
+	text-shadow: 0 0 0;
+}
+
+.homeLink
+{
+	float: left;	
+	color: black;
+/* 	font-weight: bold;	 */
+}
+
+.glyphicon-home:before {
+	font-size: 12px;
+	padding-right: 5px;
+}
+
+.clear
+{
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+.errAlert
+{
+	text-align:center;
+	font-family:Arial;
+	font-size:12px;
+	background-color:white;
+	padding-bottom:1px;
+}
+
+.button-wrap {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+
+/* no connection label */
+
+.alertCloseButton {
+	float: right;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-shadow: 0 1px 0 #fff;
+	filter: alpha(opacity = 20);
+	opacity: .5;
+	
+	width: 27px;
+	height: 25px;
+}
+
+.alertCloseButton:focus, .alertCloseButton:hover {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+	filter: alpha(opacity = 50);
+	opacity: .5
+}
+
+#noConnectionAlert {
+	color: #fff;
+	background-color: grey;
+	border-color: #808080;
+	
+	padding-top: 5px;
+	padding-bottom: 5px;
+		
+	margin-bottom: 1px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	
+	font-size: 12px;
+	display: none;
+}
+
+/* Menu Left Panel */
+
+#menuNavigation {
+    list-style-type: none;
+    padding: 0px 15px;
+}
+
+#menu-panel
+{
+	margin-top: 44px;
+    background-color: #394E63;
+    border: 0px;
+}
+
+.ui-btn-q
+{
+	background-color: #30c8f6;
+    border-color: #ddd;
+    color: #33ff33;
+    text-shadow: 0 1px 0 #f3f3f3;
+}
+
+.ui-menu-buttons{
+	background-color: #304153!important;
+    border-color: #ddd !important;
+    color: #8396a8 !important;
+    font-size:14px;
+    text-shadow: 0 1px 0 #f3f3f3;
+    width: 100%;
+    height: 44px;
+    margin: 10px 0px 0px 0px;
+    border-radius: 5px;    
+}
+
+.ui-panel-inner
+{
+	padding:0px;
+}
+
+#menuTitle {
+    font-size: 30px;
+    text-align: center;
+    background-color: #36495d; 
+    color: white;
+}
+
+#closePanel {
+ 	background-color: #36495d!important;
+}
+
+/* End of Menu */
+
+.inline{
+    display: inline;
+}
+
+
+/* only for test */
+
+#searchPlaceholder {
+	width: 100%;
+}
+
+#searchPlaceholder:AFTER {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+#searchField{
+/* 	width: 70%; */
+	margin:0;
+	float: left;
+}
+
+#searchBox {
+   /* width: 70%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 2px 2px 2px 4px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out; */
+}
+
+#searchButton{
+	width: 20%;
+	max-width: 60px;
+	min-width: 40px;
+	height:  35px;
+	padding: 5px;
+	margin: 6px 7px;	
+	float: right;
+}
+
+#searchButton:AFTER 
+{
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+
+/* #searchField :focus { */
+/*     width: 100%; */
+/* } */

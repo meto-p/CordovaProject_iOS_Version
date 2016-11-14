@@ -1,0 +1,113 @@
+.positiveAvail {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 15px;
+    padding: 1px;
+    color: white;
+    background-color: rgb(90,200,200);
+    border: 1px solid #21610B;
+    width: auto;
+    float: right;
+    padding:2px 15px;
+    margin-top: 2px;
+    -webkit-border-radius: 5px;
+}
+
+.negativeAvail {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 15px;
+    padding: 1px;
+    color: white;
+    background-color: #FF0000;
+    border: 1px solid #B40404;
+    width: auto;
+    float: right;
+    padding:2px 15px;
+    margin-top: 2px;
+    -webkit-border-radius: 5px;
+}
+
+.textLbl {
+	margin-top: 6px;
+}
+
+.left-aligned-text {
+	display: inline-block;
+	float: left;
+}
+
+.right-aligned-text {
+	display: inline-block;
+	float: right;
+}
+
+.right-aligned-text:AFTER {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+#availLabel {
+	padding-top: 4px;
+}
+
+#currentFIU {
+    float: right;
+	display: inline;
+}
+
+#availabilityBar {
+    width: 100%;
+    margin-top: 5px;
+}
+
+#availabilityBarTable {
+    width: 100%;
+}
+
+#FIUleft {
+    text-align: right;
+}
+
+#availBar {
+    background-image: -webkit-linear-gradient(bottom, rgb(200, 200, 200) 10%,
+        rgb(240, 240, 240) 50% );
+    height: 20px;
+}
+
+.positiveBar {
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    background-image: -webkit-linear-gradient(bottom, rgb(0, 255, 0) 10%,
+        rgb(150, 255, 150) 50% );
+}
+
+.negativeBar {
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    background-image: -webkit-linear-gradient(bottom, rgb(255, 0, 0) 10%,
+        rgb(255, 150, 150) 50% );
+}
+
+.negativeFullBar {
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    background-image: -webkit-linear-gradient(bottom, rgb(255, 0, 0) 10%,
+        rgb(255, 150, 150) 50% );
+    height: 20px;
+}
+
+#FIUrightBar {
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+}
+
+.ui-select {
+	margin: 8px 0;
+}
