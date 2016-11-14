@@ -1,7 +1,7 @@
 // Test commit
 //second Commit
 
-
+// тази промяна е от гит-хъб-а директно
 
 var allAccounts;
 
