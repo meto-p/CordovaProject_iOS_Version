@@ -7,7 +7,10 @@
 // sega imame promeni direktno ot github
 
 // mojebi 6te stane konflikt - promqna ot proekta
+// mojebi 6te stane konflikt - promqna ot GITHUB
 
+
+// нова проняма от проекта
 
 var allAccounts;
 
