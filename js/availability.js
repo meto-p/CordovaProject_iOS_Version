@@ -6,6 +6,8 @@
 
 // sega imame promeni direktno ot github
 
+// mojebi 6te stane konflikt - promqna ot proekta
+
 
 var allAccounts;
 
