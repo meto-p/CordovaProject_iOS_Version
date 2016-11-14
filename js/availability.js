@@ -4,6 +4,8 @@
 
 // тук имам още 1 промяна от проекта
 
+// sega imame promeni direktno ot github
+
 
 var allAccounts;
 
