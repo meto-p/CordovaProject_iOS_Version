@@ -1,22 +1,6 @@
 // Test commit
-//second Commit
 
-
-// тук имам още 1 промяна от проекта
-
-// sega imame promeni direktno ot github
-
-// mojebi 6te stane konflikt - promqna ot proekta
-// mojebi 6te stane konflikt - promqna ot GITHUB
-
-
-// нова проняма от проекта
-// сега правя промяна от гит-хуб и я къмитвам
-
-// Сега правя промяна директно от файла !!!
-
-
-// ще се отрази ли в приложението - да отразява се 
+// сега да видим дали ще мога да ъпдейтна от еклипса !?!
 
 var allAccounts;
 
