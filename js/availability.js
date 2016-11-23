@@ -1,3 +1,6 @@
+// proba ot Eclipse
+
+
 var allAccounts;
 
 function execAvailOnDevReady() {
