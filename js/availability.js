@@ -1,3 +1,5 @@
+// promqna ot git desctop 
+
 var allAccounts;
 
 function execAvailOnDevReady() {
