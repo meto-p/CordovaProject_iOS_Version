@@ -8,6 +8,19 @@ function execOfflineReqOnDevReady() {
         getAllPaymentRequests().then(function(requests){
             paymentRequests = requests;
             loadOfflineReqScreen();
+            
+          //прави се проверка дали има плащания, които докато са се извършвали програмата е крашнала
+            checkMultiplePayments()
+            .then(function(xml){
+                if(xml){
+                    processPayment(xml);
+                    
+                    $('.submitButton').remove();
+                    $('.deleteAllButton').remove();
+                    $(".progressBar").remove();
+                    $.unblockUI();
+                }
+            });
         });
     });
 }
@@ -258,23 +271,23 @@ function onSubmitAllBtnPressed() {
         } else {
             navigator.notification.confirm(localizeStringForKey("AM.submitAllReq"),
                 function(button) {
-            	if (button == 2) {
-            		createProgressBar();
-            		requestMultiplePayments()
-            		.then(function(xml){
-            			updateLocalDB(xml);
-            			checkMultiplePayments()
-            			.then(function(xml){
-            				processMultiplePayments(xml);
-            			})
-            			.fail(function error(err) {
-            				alertMessage("ERROR");
-            			});
-            		})
-            		.fail(function error(err) {
-            			alertMessage("there is an Error");
-            		});
-            	}
+                if (button == 2) {
+                    createProgressBar();
+                    requestMultiplePayments()
+                    .then(function(xml){
+                        updatePaymentRequests(xml);
+                        checkMultiplePayments()
+                        .then(function(xml){
+                            processMultiplePayments(xml);
+                        })
+                        .fail(function error(err) {
+                            alertMessage("ERROR");
+                        });
+                    })
+                    .fail(function error(err) {
+                        alertMessage("there is an Error");
+                    });
+                }
             }, localizeStringForKey("AT.submitAllReq"), [localizeStringForKey("no"), localizeStringForKey("yes")]);
         }          
     });
@@ -363,186 +376,204 @@ function reloadData() {
 }
 
 function requestMultiplePayments() {
-	var deferred = $.Deferred();
-	
-	getAllPendingPayments().then(function(requests){
-		var stringOfPendingPayments;
-		stringOfPendingPayments = JSON.stringify(requests);
-		
-		serverUrl = getMethodEndpoint("requestMultiplePayments");
-		username = getUsername();
-	    var result;
+    var deferred = $.Deferred();
+    var stringOfPendingPayments;
+    var serverUrl = getMethodEndpoint("requestMultiplePayments");
+    var username = getUsername();
+    var result;
 
-	    $.ajax({
-	        async: true,
-	        type: "post",
-	        dataType: "xml",
-	        cache: false,
-	        timeout: ajaxTimeout,
-	        suppressGlCompleted: true,
-	        url: serverUrl,
-	        data: {
-	            login: trimParameter(username),
-	            paymentRequests: stringOfPendingPayments
-	        },
-
-	        beforeSend: function(XMLHttpRequest) {
-	            console.log(currentDate() + " - start  requst: ");
-	        },
-	        complete: function(XMLHttpRequest, textStatus) {            
-	            console.log(currentDate() + " - requst  completed: ");
-	        },
-
-	        success: function(xml) {
-	        	var result;
-	            console.log(currentDate() + " - success requst: ");
-	            $(xml).find('PaymentResponseInfo').each(function() {
-	                result = parseInt($(this).find('result').text());
-	                console.log("rezultatyt e : " + result)
-	            });
-	            if(result == -1) {
-	            	deferred.resolve(xml);
-	            } else {
-	            	reloadOfflineReqScreen();
-	            	// alert("ERROR");
-	            	deferred.reject();
-	            }
-	            
-	        },
-	        
-	        error: function(xhr, textStatus, thrownError) {
-	            console.log(currentDate() + " - Pending Payment Error: " + textStatus);
-	            deferred.reject();	            
-	        }
-	    })
-		
+    getAllPendingPayments().then(function(requests){
+        stringOfPendingPayments = JSON.stringify(requests);
+        
+        $.ajax({
+            async: true,
+            type: "post",
+            dataType: "xml",
+            cache: false,
+            timeout: ajaxTimeout,
+            suppressGlCompleted: true,
+            url: serverUrl,
+            data: {
+                login: trimParameter(username),
+                paymentRequests: stringOfPendingPayments
+            },
+            beforeSend: function(XMLHttpRequest) {
+                console.log(currentDate() + " - start  requst: ");
+            },
+            complete: function(XMLHttpRequest, textStatus) {            
+                console.log(currentDate() + " - requst  completed: ");
+            },
+            success: function(xml) {
+                var result;
+                console.log(currentDate() + " - success requst: ");
+                $(xml).find('PaymentResponseInfo').each(function() {
+                    result = parseInt($(this).find('result').text());
+                    console.log("rezultatyt e : " + result)
+                });
+                if(result == -1) {
+                    deferred.resolve(xml);
+                } else {
+                    reloadOfflineReqScreen();
+                    // alert("ERROR");
+                    deferred.reject();
+                }
+            },
+            error: function(xhr, textStatus, thrownError) {
+                console.log(currentDate() + " - Pending Payment Error: " + textStatus);
+                deferred.reject();	            
+            }
+        })	
     });
-	return deferred.promise();
+    return deferred.promise();
 }
 
 
 
-function updateLocalDB(xml) {
-	var account;
-	var bankAccount;
-	var amount;
-	
-	$(xml).find('PaymentResponseInfo').each(function() {
-		$(this).find('paymentResponse').each(function() {
-			account =  $(this).find('account').text();
-			bankAccount = $(this).find('bankAccount').text();
-			amount = $(this).find('amount').text();
-			paymentId = $(this).find('paymentId').text();
-			
-			console.log("Akauntite sa : " + account + " - " + amount);
-			updatePmntReqStatus("in progress", paymentId, account, bankAccount, amount);
-			// TODO update UI status !! 
-			
-		});
+function updatePaymentRequests(xml) {
+    var extId;
+    var account;
+    var bankAccount;
+    var amount;
+    
+    $(xml).find('PaymentResponseInfo').each(function() {
+        $(this).find('paymentResponse').each(function() {
+            extId = $(this).find('extId').text();
+            account =  $(this).find('account').text();
+            bankAccount = $(this).find('bankAccount').text();
+            amount = $(this).find('amount').text();
+            paymentId = $(this).find('paymentId').text();
+
+            updatePayment(extId, paymentId, "in progress");
+        });
     });
 }
 
+function updateStatus(extId, status){
+    updatePmntReqStatusById(extId, status);
+    updateStatusLabel(extId, status)
+}
+
+function updatePayment(extId, paymentId, status){
+    updatePmntReqStatus(extId, paymentId, status);
+    updateStatusLabel(extId, status)
+}
 
 function checkMultiplePayments() {
-var deferred = $.Deferred();
-	
-getAllPendingPaymentsWithServerId().then(function(requests){
-		var stringOfPendingPayments;
-		stringOfPendingPayments = JSON.stringify(requests);
-		
-		serverUrl = getMethodEndpoint("checkMultiplePayments");
-		username = getUsername();
-	    var result;
+    var deferred = $.Deferred();
+    var stringOfPendingPayments;
+    
+    getAllPendingPaymentsWithServerId().then(function(requests){
+        if(requests.length == 0){
+            deferred.resolve();
+            return;
+        }
+        
+        stringOfPendingPayments = JSON.stringify(requests);
+        serverUrl = getMethodEndpoint("checkMultiplePayments");
+        username = getUsername();
+        var result;
 
-	    $.ajax({
-	        async: true,
-	        type: "post",
-	        dataType: "xml",
-	        cache: false,
-	        timeout: ajaxTimeout,
-	        suppressGlCompleted: true,
-	        url: serverUrl,
-	        data: {
-	            login: trimParameter(username),
-	            paymentRequests: stringOfPendingPayments
-	        },
+        $.ajax({
+            async: true,
+            type: "post",
+            dataType: "xml",
+            cache: false,
+            timeout: ajaxTimeout,
+            suppressGlCompleted: true,
+            url: serverUrl,
+            data: {
+                login: trimParameter(username),
+                paymentRequests: stringOfPendingPayments
+            },
 
-	        beforeSend: function(XMLHttpRequest) {
-	            console.log(currentDate() + " - start  requst: ");
-	        },
-	        complete: function(XMLHttpRequest, textStatus) {            
-	            console.log(currentDate() + " - requst  completed: ");
-	        },
+            beforeSend: function(XMLHttpRequest) {
+                console.log(currentDate() + " - start  requst: ");
+            },
+            complete: function(XMLHttpRequest, textStatus) {            
+                console.log(currentDate() + " - requst  completed: ");
+            },
 
-	        success: function(xml) {
-	        	deferred.resolve(xml);	
-	        },
-	        
-	        error: function(xhr, textStatus, thrownError) {
-	            console.log(currentDate() + " - Pending Payment Error: " + textStatus);
-	            $.unblockUI();
-	            deferred.reject();	            
-	        }
-	    })
-		
+            success: function(xml) {
+                deferred.resolve(xml);	
+            },
+
+            error: function(xhr, textStatus, thrownError) {
+                console.log(currentDate() + " - Pending Payment Error: " + textStatus);
+                $.unblockUI();
+                deferred.reject();	            
+            }
+        })
+
     });
-	return deferred.promise();
+    return deferred.promise();
 }
 
 function processMultiplePayments(xml){
-	var result;
-    console.log(currentDate() + " - success requst: ");
-    result = parseInt(xml.getElementsByTagName('result')[0].childNodes[0].nodeValue);
+    if(xml){    
+        var result;
+        console.log(currentDate() + " - success requst: ");
+        result = parseInt(xml.getElementsByTagName('result')[0].childNodes[0].nodeValue);
     
-    if(result == 1) {
-    	deleteAllPendingRequests();
-    	alertMessage("All pending orders are sent successfully", "Request completed")
-    	reloadOfflineReqScreen();
-    } else if (result == -1) {
-    	// payment is still in process
-    	
-    	var paymentId; //TODO  should be used the local id, not paymentId;
-    	$(xml).find('PaymentResponseInfo').each(function() {
-        	$(this).find('paymentResponse').each(function() {
-        		result = parseInt($(this).find('result').text());
-        		paymentId = $(this).find('paymentId').text();
-        		console.log("result : " + result);
-        		console.log("the Id is : " + paymentId);
-        		
-        		if (result == 1) {
-        			// delete record with current id, from local storage
-        			deletePaymentRequestwithPaymentId(paymentId);
-        			// алтернатива - ако не се връща от сървъра и локалното id - getLocalIdByPaymentId :/ - 
-        			
-        //			document.getElementById(data.id).remove(); // we must used local ID
-        			updateProgressBar();
-        		} else if (result == -2 ) {
-        			// change payment status of payment request to FAIL 
-        			
-        			updateProgressBar();
-        		} else if (result == -1) {
-        			// in this case - do nothing
-        		} else {
-        			// change payment status of payment request to FAIL 
-        			
-        			updateProgressBar();
-        		}
-        	})
-        });
-    	
-    	setTimeout(function(){
-    		checkMultiplePayments()
-    		.then(function(xml){
-    			processMultiplePayments(xml);
-    		});
-    	}, 3000);
-    	
-    	console.log("payment is still in process");
-    } else if (result == -2) {
-    	// alert("ERROR");
-    	reloadOfflineReqScreen();
-    } else {
-    	// alert("ERROR");
-    	reloadOfflineReqScreen();
+        if(result == 1) {
+            deleteAllPendingRequests();
+            alertMessage("All pending orders are sent successfully", "Request completed")
+            reloadOfflineReqScreen();
+        } else if (result == -1) {
+            // payment is still in process    	
+            processPayment(xml);    	
+            setTimeout(function(){
+                checkMultiplePayments()
+                .then(function(xml){
+                    processMultiplePayments(xml);
+                });
+            }, 3000);
+    
+            console.log("payment is still in process");
+        } else if (result == -2) {
+            // alert("ERROR");
+            reloadOfflineReqScreen();
+        } else if (result == 0) {
+            // пращането е завършило със грешка за някои от рикуестите, но е завършило        
+            //  обиколи всички записи които са останали, изтрии готовите, промени статуса на феилналите!    
+            processPayment(xml);      
+            reloadOfflineReqScreen();
+    
+        } else {
+            alertMessage("error code: " + result, "ERROR");
+            reloadOfflineReqScreen();
+        }
     }
+}
+
+function processPayment(xml) {
+    var paymentId;
+    var extId; // local Id
+    $(xml).find('PaymentResponseInfo').each(function() {
+        $(this).find('paymentResponse').each(function() {
+            result = parseInt($(this).find('result').text());
+            paymentId = $(this).find('paymentId').text();
+            extId = $(this).find('extId').text();
+            console.log("result : " + result + " the paymentId is : " + paymentId + " the local is : " + extId );
+
+            if (result == 1) {
+                // delete record with current id, from local storage
+                deletePaymentRequest(extId);
+                document.getElementById(extId).remove();
+                updateProgressBar();
+            } else if (result == -2 ) {
+                // change payment status of payment request to FAIL 
+                updateStatus(extId, "Fail");
+                updateProgressBar();
+            } else if (result == -1) {
+                // in this case - do nothing
+            } else if (result == 0) {
+                updateStatus("not sent", extId);
+                updateStatus(extId, "not sent");
+                updateProgressBar();
+            } else {
+                updateStatus(extId, "Fail");
+                updateProgressBar();
+            }
+        })
+    });
 }

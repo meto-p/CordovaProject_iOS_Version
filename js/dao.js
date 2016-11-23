@@ -83,9 +83,9 @@ function createDatabase() {
                         amount real, \
                         bankAccount text, \
                         accDetCode text, \
-        				currency text, \
+                        currency text, \
                         userId text, \
-        				serverId text, \
+                        serverId text, \
                         status text, \
                         dateCreated text, \
                         dateUpdated text, \
@@ -602,7 +602,8 @@ function getAllPendingPayments() {
                     [window.localStorage.getItem(CONSTANTS.USERNAME_PARAM)], function(tx, res) {
                 for (var i = 0; i < countOfRows; i++) {
                     request = {
-                    	account: res.rows.item(i).accDetCode,
+                        extId: res.rows.item(i).id,
+                        account: res.rows.item(i).accDetCode,
                         amount: res.rows.item(i).amount,
                         bankAccount: res.rows.item(i).bankAccount,
                     };
@@ -629,8 +630,8 @@ function getAllPendingPaymentsWithServerId() {
 
     // get count of rows in PaymentRequest table
     db.transaction(function(tx) {
-        tx.executeSql("select count(*) as cnt from PaymentRequest where userId = ?;", 
-                [window.localStorage.getItem(CONSTANTS.USERNAME_PARAM)], function(tx, res) {
+        tx.executeSql("select count(*) as cnt from PaymentRequest where userId = ? AND serverId IS NOT ? ;", 
+            [window.localStorage.getItem(CONSTANTS.USERNAME_PARAM), null], function(tx, res) {
             console.log("res.rows.length: " + res.rows.item(0).cnt);
             countOfRows = res.rows.item(0).cnt;
         });
@@ -644,7 +645,8 @@ function getAllPendingPaymentsWithServerId() {
                     [window.localStorage.getItem(CONSTANTS.USERNAME_PARAM), "in progress"], function(tx, res) {
                 for (var i = 0; i < countOfRows; i++) {
                     request = {
-                    	account: res.rows.item(i).accDetCode,
+                        extId: res.rows.item(i).id,     
+                        account: res.rows.item(i).accDetCode,
                         amount: res.rows.item(i).amount,
                         bankAccount: res.rows.item(i).bankAccount,
                         paymentId: res.rows.item(i).serverId,
@@ -680,11 +682,18 @@ function updatePmntReqStatusById(id, status){
     return deferred.promise();
 }
 
-function updatePmntReqStatus(status, serverId, account, bankAccount, amount){
+/**
+ * update serverID and status
+ * @param id
+ * @param serverId
+ * @param status
+ * @returns
+ */
+function updatePmntReqStatus(id, serverId, status){
     var deferred = $.Deferred();
     db.transaction(function(tx) {
-        tx.executeSql("UPDATE PaymentRequest SET status = ?, serverId = ?, dateUpdated = ?  WHERE accDetCode = ? AND bankAccount = ? AND amount = ? AND userId = ?" ,
-                [status, serverId, currentDate(), account, bankAccount, amount, window.localStorage.getItem(CONSTANTS.USERNAME_PARAM)], function(tx, res) {
+        tx.executeSql("UPDATE PaymentRequest SET status = ?, serverId = ?, dateUpdated = ? WHERE id = ? AND userId = ?", 
+                [status, serverId, currentDate(), id, window.localStorage.getItem(CONSTANTS.USERNAME_PARAM)], function(tx, res) {
             console.log(currentDate() + " - Status updated to " + status);
             
             deferred.resolve();

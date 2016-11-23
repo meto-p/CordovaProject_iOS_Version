@@ -1,23 +1,3 @@
-// Test commit
-//second Commit
-
-
-// тук имам още 1 промяна от проекта
-
-// sega imame promeni direktno ot github
-
-// mojebi 6te stane konflikt - promqna ot proekta
-// mojebi 6te stane konflikt - promqna ot GITHUB
-
-
-// нова проняма от проекта
-// сега правя промяна от гит-хуб и я къмитвам
-
-// Сега правя промяна директно от файла !!!
-
-
-// ще се отрази ли в приложението - да отразява се 
-
 var allAccounts;
 
 function execAvailOnDevReady() {
@@ -582,6 +562,3 @@ $(document).ready(function() {
         }
     });
 });
-
-
-// и тук правя промяна, предполагам че не би трябвало да стане конфликт
